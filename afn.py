@@ -1,5 +1,5 @@
 class AFN:
-    def _init_(self, simbolos=None, estados=None, funcao_programa=None, estado_inicial=None, estados_finais=None):
+    def __init__(self, simbolos=None, estados=None, funcao_programa=None, estado_inicial=None, estados_finais=None):
         if simbolos is None:
             simbolos = set()
         if estados is None:

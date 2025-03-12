@@ -1,7 +1,7 @@
 class Simbolo:
     VAZIA = None  # Será inicializado depois
 
-    def _init_(self, simbolo=None):
+    def __init__(self, simbolo=None):
         """
         Método construtor
         :param simbolo: caractere que representa o símbolo do alfabeto

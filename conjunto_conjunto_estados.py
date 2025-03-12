@@ -1,7 +1,7 @@
 from conjunto_estados import ConjuntoEstados
 
 class ConjuntoConjuntoEstados:
-    def _init_(self):
+    def __init__(self):
         self.elementos = set()
 
     def vazio(self):

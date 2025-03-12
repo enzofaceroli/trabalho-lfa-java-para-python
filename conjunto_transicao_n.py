@@ -1,5 +1,5 @@
 class ConjuntoTransicaoN:
-    def _init_(self):
+    def __init__(self):
         """Inicializa um conjunto de transições não determinísticas"""
         self.elementos = set()
 

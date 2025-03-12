@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 
 class AFD:
-    def _init_(self, simbolos=None, estados=None, funcao_programa=None, estado_inicial=None, estados_finais=None):
+    def __init__(self, simbolos=None, estados=None, funcao_programa=None, estado_inicial=None, estados_finais=None):
         self.simbolos = simbolos.copy() if simbolos else set()
         self.estados = estados.copy() if estados else set()
         self.funcao_programa = funcao_programa.copy() if funcao_programa else {}

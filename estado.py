@@ -3,7 +3,7 @@ class Estado:
     Classe que representa um estado de um autômato
     """
     
-    def _init_(self, nome=""):
+    def __init__(self, nome=""):
         self.nome = nome
     
     def get_nome(self):

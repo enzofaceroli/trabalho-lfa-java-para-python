@@ -3,7 +3,7 @@ class ConjuntoTransicaoD:
     Classe que representa um conjunto de transições determinísticas de um autômato
     """
     
-    def _init_(self):
+    def __init__(self):
         self.elementos = set()
     
     def vazio(self):

@@ -1,5 +1,5 @@
 class ConjuntoSimbolo:
-    def _init_(self):
+    def __init__(self):
         """Inicializa um conjunto de símbolos"""
         self.elementos = set()
 

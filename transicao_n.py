@@ -3,7 +3,7 @@ class TransicaoN:
     Classe que representa a função de transição de um autômato finito não determinístico
     """
     
-    def _init_(self, origem=None, destino=None, simbolo=None):
+    def __init__(self, origem=None, destino=None, simbolo=None):
         self.origem = origem.clonar() if origem else None
         self.destino = destino.clonar() if destino else set()
         self.simbolo = simbolo.clonar() if simbolo else None
