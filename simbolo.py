@@ -24,7 +24,7 @@ class Simbolo:
         """Verifica se dois símbolos são iguais"""
         return self.simbolo == outro_simbolo.get_simbolo()
 
-    def _str_(self):
+    def __str__(self):
         """Retorna a representação em string do símbolo"""
         return str(self.simbolo)
 

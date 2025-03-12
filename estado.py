@@ -18,5 +18,5 @@ class Estado:
     def igual(self, estado):
         return self.nome == estado.get_nome()
     
-    def _str_(self):
+    def __str__(self):
         return self.nome
