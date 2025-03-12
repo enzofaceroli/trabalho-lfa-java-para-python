@@ -38,10 +38,10 @@ class ConjuntoTransicaoD:
             novo_conjunto.inclui(transicao)
         return novo_conjunto
     
-    def igual(self, outro_conjunto):
-        return self.elementos == outro_conjunto.elementos
+    def igual(self, cce):
+        return self.elementos == cce.get_elementos()
     
-    def _str_(self):
+    def __str__(self):
         return "{" + ", ".join(str(transicao) for transicao in self.elementos) + "}"
     
     def get_elementos(self):

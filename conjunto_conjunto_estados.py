@@ -59,5 +59,5 @@ class ConjuntoConjuntoEstados:
             novo = novo.uniao(conjunto)
         return novo.clonar()
 
-    def _str_(self):
+    def __str__(self):
         return "{" + ",".join(str(e) for e in self.elementos) + "}"
