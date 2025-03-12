@@ -43,7 +43,7 @@ class ConjuntoEstados:
     def igual(self, ce):
         return all(self.pertence(e) for e in ce.get_elementos()) and all(ce.pertence(e) for e in self.elementos)
 
-    def _str_(self):
+    def __str__(self):
         elementos_str = ", ".join(str(e) for e in self.elementos)
         return "{" + elementos_str + "}"
 

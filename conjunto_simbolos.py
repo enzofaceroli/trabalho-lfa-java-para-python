@@ -46,7 +46,7 @@ class ConjuntoSimbolo:
         """Verifica se dois conjuntos são iguais"""
         return self.elementos == outro.get_elementos()
 
-    def _str_(self):
+    def __str__(self):
         """Retorna a representação em string do conjunto"""
         return "{" + ", ".join(str(simbolo) for simbolo in self.elementos) + "}"
 
