@@ -36,5 +36,5 @@ class TransicaoD:
             self.simbolo.igual(transicao.get_simbolo())
         )
     
-    def _str_(self):
+    def __str__(self):
         return f"({self.origem}, {self.simbolo}, {self.destino})"
