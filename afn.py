@@ -1,3 +1,5 @@
+from simbolo import Simbolo
+
 class AFN:
     def __init__(self, simbolos=None, estados=None, funcao_programa=None, estado_inicial=None, estados_finais=None):
         if simbolos is None:
@@ -50,49 +52,49 @@ class AFN:
     
     def _str_(self):
         return f"({self.simbolos}, {self.estados}, {self.funcao_programa}, {self.estado_inicial}, {self.estados_finais})"
-    
+        
     def p(self, estado, simbolo):
         for transicao in self.funcao_programa:
-            if transicao["origem"] == estado and transicao["simbolo"] == simbolo:
+            if transicao["origem"] == estado and transicao["simbolo"].igual(simbolo):  # Comparação correta de Simbolo
                 return transicao["destino"]
-        return set()
-    
+        return set()  # Retorna um conjunto vazio se não houver transição
+        
     def pe(self, estados, palavra):
         if not palavra:
             return estados
         novo_estados = set()
         simbolo = palavra[0]
         for estado in estados:
-            novo_estados.update(self.p(estado, simbolo))
-        return self.pe(novo_estados, palavra[1:])
-    
+            novo_estados.update(self.p(estado, simbolo))  # Processa a transição
+        return self.pe(novo_estados, palavra[1:])  # Recursão para o próximo símbolo
+        
     def aceita(self, palavra):
         estados_atuais = {self.estado_inicial}
-        estados_finais = self.pe(estados_atuais, palavra)
+        estados_finais = self.pe(estados_atuais, [Simbolo(c) for c in palavra])  # Converte cada caractere em Simbolo
         return any(estado in self.estados_finais for estado in estados_finais)
-    
+        
     def to_xml(self, filename):
         with open(f"{filename}.xml", "w") as file:
             file.write("<AFN>\n")
             file.write("\t<simbolos>\n")
             for simbolo in self.simbolos:
-                file.write(f"\t\t<elemento valor=\"{simbolo}\"/>\n")
+                file.write(f"\t\t<elemento valor=\"{str(simbolo)}\"/>\n")  # Converte Simbolo para string
             file.write("\t</simbolos>\n\n")
             
             file.write("\t<estados>\n")
             for estado in self.estados:
-                file.write(f"\t\t<elemento valor=\"{estado}\"/>\n")
+                file.write(f"\t\t<elemento valor=\"{str(estado)}\"/>\n")  # Converte Estado para string
             file.write("\t</estados>\n\n")
             
             file.write("\t<estadosFinais>\n")
             for estado in self.estados_finais:
-                file.write(f"\t\t<elemento valor=\"{estado}\"/>\n")
+                file.write(f"\t\t<elemento valor=\"{str(estado)}\"/>\n")  # Converte Estado para string
             file.write("\t</estadosFinais>\n\n")
             
             file.write("\t<funcaoPrograma>\n")
             for transicao in self.funcao_programa:
-                file.write(f"\t\t<elemento origem=\"{transicao['origem']}\" destino=\"{transicao['destino']}\" simbolo=\"{transicao['simbolo']}\"/>\n")
+                file.write(f"\t\t<elemento origem=\"{str(transicao['origem'])}\" destino=\"{str(transicao['destino'])}\" simbolo=\"{str(transicao['simbolo'])}\"/>\n")  # Converte Simbolo e Estado para string
             file.write("\t</funcaoPrograma>\n\n")
             
-            file.write(f"\t<estadoInicial valor=\"{self.estado_inicial}\"/>\n\n")
+            file.write(f"\t<estadoInicial valor=\"{str(self.estado_inicial)}\"/>\n\n")  # Converte Estado para string
             file.write("</AFN>")

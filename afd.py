@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+from simbolo import Simbolo
 
 class AFD:
     def __init__(self, simbolos=None, estados=None, funcao_programa=None, estado_inicial=None, estados_finais=None):
@@ -64,10 +65,14 @@ class AFD:
             destino = elemento.get("destino")
             simbolo = elemento.get("simbolo")
             self.funcao_programa[(origem, simbolo)] = destino
-    
+            
     def processar(self, estado, simbolo):
-        return self.funcao_programa.get((estado, simbolo))
-    
+        # Verifica se o estado e o símbolo estão na função de programa
+        for (estado_origem, simbolo_transicao), estado_destino in self.funcao_programa.items():
+            if estado_origem == estado and simbolo_transicao.igual(simbolo):
+                return estado_destino
+        return None  # Retorna None se não houver transição
+
     def processar_palavra(self, estado, palavra):
         estado_atual = estado
         for simbolo in palavra:
@@ -75,30 +80,34 @@ class AFD:
             if estado_atual is None:
                 return None
         return estado_atual
-    
+            
     def aceita(self, palavra):
-        return self.processar_palavra(self.estado_inicial, palavra) in self.estados_finais
+        # Converte a palavra em uma lista de objetos Simbolo
+        simbolos_palavra = [Simbolo(c) for c in palavra]
+        # Processa a palavra e verifica se o estado final está no conjunto de estados finais
+        estado_final = self.processar_palavra(self.estado_inicial, simbolos_palavra)
+        return estado_final in self.estados_finais
     
     def to_xml(self, filename):
         root = ET.Element("AFD")
         
         simbolos_elem = ET.SubElement(root, "simbolos")
         for s in self.simbolos:
-            ET.SubElement(simbolos_elem, "elemento", valor=s)
-        
+            ET.SubElement(simbolos_elem, "elemento", valor=str(s))  # Converte Simbolo para string
+
         estados_elem = ET.SubElement(root, "estados")
         for e in self.estados:
-            ET.SubElement(estados_elem, "elemento", valor=e)
+            ET.SubElement(estados_elem, "elemento", valor=str(e))  # Converte Estado para string
         
         estados_finais_elem = ET.SubElement(root, "estadosFinais")
         for ef in self.estados_finais:
-            ET.SubElement(estados_finais_elem, "elemento", valor=ef)
+            ET.SubElement(estados_finais_elem, "elemento", valor=str(ef))  # Converte Estado para string
         
         funcao_programa_elem = ET.SubElement(root, "funcaoPrograma")
         for (origem, simbolo), destino in self.funcao_programa.items():
-            ET.SubElement(funcao_programa_elem, "elemento", origem=origem, destino=destino, simbolo=simbolo)
-        
-        ET.SubElement(root, "estadoInicial", valor=self.estado_inicial)
+            ET.SubElement(funcao_programa_elem, "elemento", origem=str(origem), destino=str(destino), simbolo=str(simbolo))  # Converte Simbolo e Estado para string
+
+        ET.SubElement(root, "estadoInicial", valor=str(self.estado_inicial))  # Converte Estado para string
         
         tree = ET.ElementTree(root)
         tree.write(filename + ".xml", encoding="utf-8", xml_declaration=True)
